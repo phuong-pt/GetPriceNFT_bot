@@ -12,10 +12,15 @@ from urllib.request import urlopen
 # import json
 import json
 
-urlMusk = "https://market-api.radiocaca.com/nft-sales?saleType&category=7&tokenType&token_standard=BEP721&pageNo=1&pageSize=20&sortBy=single_price&order=asc&tokenId=-1"
-urlKiss = "https://market-api.radiocaca.com/nft-sales?saleType&category=20&tokenType&token_standard=BEP721&pageNo=1&pageSize=20&sortBy=single_price&order=asc&tokenId=-1"
-urlCali = "https://market-api.radiocaca.com/nft-sales?saleType&category=29&tokenType&token_standard=BEP721&pageNo=1&pageSize=20&sortBy=single_price&order=asc&tokenId=-1"
-urlUsm = "https://market-api.radiocaca.com/nft-sales?saleType&category=8&tokenType&token_standard=BEP721&pageNo=1&pageSize=20&sortBy=single_price&order=asc&tokenId=-1"
+urlMusk_max = "https://market-api.radiocaca.com/nft-sales?saleType&category=7&tokenType&token_standard=BEP721&pageNo=1&pageSize=10000&sortBy=single_price&order=asc&tokenId=-1"
+urlKiss_max = "https://market-api.radiocaca.com/nft-sales?saleType&category=20&tokenType&token_standard=BEP721&pageNo=1&pageSize=10000&sortBy=single_price&order=asc&tokenId=-1"
+urlCali_max = "https://market-api.radiocaca.com/nft-sales?saleType&category=29&tokenType&token_standard=BEP721&pageNo=1&pageSize=10000&sortBy=single_price&order=asc&tokenId=-1"
+urlUsm_max = "https://market-api.radiocaca.com/nft-sales?saleType&category=8&tokenType&token_standard=BEP721&pageNo=1&pageSize=10000&sortBy=single_price&order=asc&tokenId=-1"
+
+urlMusk = "https://market-api.radiocaca.com/nft-sales?saleType&category=7&tokenType&token_standard=BEP721&pageNo=1&pageSize=2&sortBy=single_price&order=asc&tokenId=-1"
+urlKiss = "https://market-api.radiocaca.com/nft-sales?saleType&category=20&tokenType&token_standard=BEP721&pageNo=1&pageSize=2&sortBy=single_price&order=asc&tokenId=-1"
+urlCali = "https://market-api.radiocaca.com/nft-sales?saleType&category=29&tokenType&token_standard=BEP721&pageNo=1&pageSize=2&sortBy=single_price&order=asc&tokenId=-1"
+urlUsm = "https://market-api.radiocaca.com/nft-sales?saleType&category=8&tokenType&token_standard=BEP721&pageNo=1&pageSize=2&sortBy=single_price&order=asc&tokenId=-1"
 
 
 def start(update: Update, context: CallbackContext)-> None:
@@ -25,59 +30,67 @@ def start(update: Update, context: CallbackContext)-> None:
   
 def mml(update: Update, context: CallbackContext) -> None:
 
-    response = urlopen(urlMusk)
+    response = urlopen(urlMusk_max)
     data_json = json.loads(response.read())
     ouputStr = ""
+    totalMML = len(data_json["list"])
     for x in range(7):
         token_id = data_json["list"][x]["token_id"]
         fixed_price = data_json["list"][x]["fixed_price"]
         ouputStr += "{:<8}" + "{:<8}" + "{:<8}" + "\n"
         ouputStr = ouputStr.format (str(x+1), token_id, fixed_price)
-    ouputStrx ="7 MML có giá thấp nhất" + "\n"  +"{:<8}" +"{:<8}" +"{:<8}" + "\n"   + "=========================" + "\n" + ouputStr
-    ouputStrx  = ouputStrx.format("LAND","ID","PRICE")
+        
+    ouputStrx = f"Tổng cộng có {totalMML} MUSK USM LAND được treo bán trên market, " + " Trong đó 7 mảnh có giá thấp nhất" + "\n"  +"{:<8}" +"{:<8}" +"{:<8}" + "\n"   + "=========================" + "\n" + ouputStr
+    ouputStrx  = ouputStrx.format("NO.","ID","PRICE")
     update.message.reply_text( ouputStrx
         )
 def cali(update: Update, context: CallbackContext) -> None:
 
-    response = urlopen(urlCali)
+    response = urlopen(urlCali_max)
     data_json = json.loads(response.read())
     ouputStr = ""
+    totalCALI = len(data_json["list"])
     for x in range(7):
         token_id = data_json["list"][x]["token_id"]
         fixed_price = data_json["list"][x]["fixed_price"]
         ouputStr += "{:<8}" + "{:<8}" + "{:<8}" + "\n"
         ouputStr = ouputStr.format (str(x+1), token_id, fixed_price)
-    ouputStrx ="7 CALI có giá thấp nhất" + "\n"  +"{:<8}" +"{:<8}" +"{:<8}" + "\n"   + "=========================" + "\n" + ouputStr
-    ouputStrx  = ouputStrx.format("LAND","ID","PRICE")
+    ouputStrx = f"Tổng cộng có {totalCALI} CALI LAND được treo bán trên market, " + " Trong đó 7 mảnh có giá thấp nhất" + "\n"  +"{:<8}" +"{:<8}" +"{:<8}" + "\n"   + "=========================" + "\n" + ouputStr
+
+    ouputStrx  = ouputStrx.format("NO.","ID","PRICE")
     update.message.reply_text( ouputStrx
         )
 def kiss(update: Update, context: CallbackContext) -> None:
 
-    response = urlopen(urlKiss)
+    response = urlopen(urlKiss_max)
     data_json = json.loads(response.read())
     ouputStr = ""
+    totalKISS = len(data_json["list"])
     for x in range(7):
         token_id = data_json["list"][x]["token_id"]
         fixed_price = data_json["list"][x]["fixed_price"]
         ouputStr += "{:<8}" + "{:<8}" + "{:<8}" + "\n"
         ouputStr = ouputStr.format (str(x+1), token_id, fixed_price)
-    ouputStrx ="7 KISS có giá thấp nhất" + "\n"  +"{:<8}" +"{:<8}" +"{:<8}" + "\n"   + "=========================" + "\n" + ouputStr
-    ouputStrx  = ouputStrx.format("LAND","ID","PRICE")
+    ouputStrx = f"Tổng cộng có {totalKISS} KISS LAND được treo bán trên market, " + " Trong đó 7 mảnh có giá thấp nhất" + "\n"  +"{:<8}" +"{:<8}" +"{:<8}" + "\n"   + "=========================" + "\n" + ouputStr
+
+    ouputStrx  = ouputStrx.format("NO.","ID","PRICE")
     update.message.reply_text( ouputStrx
         )
 
 def usm(update: Update, context: CallbackContext) -> None:
 
-    response = urlopen(urlUsm)
+    response = urlopen(urlUsm_max)
     data_json = json.loads(response.read())
     ouputStr = ""
+    totalUSM = len(data_json["list"])
     for x in range(7):
         token_id = data_json["list"][x]["token_id"]
         fixed_price = data_json["list"][x]["fixed_price"]
         ouputStr += "{:<8}" + "{:<8}" + "{:<8}" + "\n"
         ouputStr = ouputStr.format (str(x+1), token_id, fixed_price)
-    ouputStrx ="7 USM có giá thấp nhất" + "\n"  +"{:<8}" +"{:<8}" +"{:<8}" + "\n"   + "=========================" + "\n" + ouputStr
-    ouputStrx  = ouputStrx.format("LAND","ID","PRICE")
+    ouputStrx = f"Tổng cộng có {totalUSM} METAMON LAND được treo bán trên market, " + " Trong đó 7 mảnh có giá thấp nhất" + "\n"  +"{:<8}" +"{:<8}" +"{:<8}" + "\n"   + "=========================" + "\n" + ouputStr
+
+    ouputStrx  = ouputStrx.format("NO.","ID","PRICE")
     update.message.reply_text( ouputStrx
         )
 
